@@ -32,14 +32,21 @@ const App = () => {
     ]);
   };
 
+  const sortItem = (a, b) => {
+    if (a.date > b.date) {
+      return 1;
+    } else {
+      return -1;
+    }
+  };
+
   return (
     <div className="app">
       <LeftPanel>
         <Header />
         <JournalAddButton />
         <JournalList>
-          {items.map(el => (
-            // eslint-disable-next-line react/jsx-key
+          {items.sort(sortItem).map(el => (
             <CardButton>
               <JournalItem title={el.title} text={el.text} date={el.date} />
             </CardButton>
