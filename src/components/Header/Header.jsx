@@ -1,8 +1,8 @@
-import './Header.css';
+import styles from './Header.module.css';
 
 const Header = () => {
   return (
-    <div className="header">
+    <div className={styles.header}>
       <h1>Personal Diary</h1>
     </div>
   );
