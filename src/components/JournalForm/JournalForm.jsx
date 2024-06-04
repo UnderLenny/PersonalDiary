@@ -3,6 +3,7 @@ import Button from '../Button/Button';
 import { useEffect, useReducer, useRef } from 'react';
 import cn from 'classnames';
 import { INITIAL_STATE, formReducer } from './JournalForm.state';
+import Input from '../Input/Input';
 
 function JournalForm({ onSubmit }) {
 	const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
@@ -11,7 +12,7 @@ function JournalForm({ onSubmit }) {
 	const dateRef = useRef();
 	const postRef = useRef();
 
-	const focusError = () => {
+	const focusError = (isValid) => {
 		switch (true) {
 			case !isValid.title: 
 				titleRef.current.focus();
@@ -57,25 +58,21 @@ function JournalForm({ onSubmit }) {
 	return (
 		<form className={styles['journal-form']} onSubmit={addJournalItem}>
 			<div>
-				<input type='text'  ref={titleRef}onChange={onChange} value={values.title} name='title' className={cn(styles['input-title'], {
-					[styles['invalid']]: !isValid.title
-				})}/>
+				<Input type='text' ref={titleRef} isValid={isValid.title} onChange={onChange} value={values.title} name='title' appearance="title"/>
 			</div>
 			<div className={styles['form-row']}>
 				<label htmlFor="date" className={styles['form-label']}>
 					<img src='/calendar.svg' alt='Иконка календаря'/>
 					<span>Дата</span>
 				</label>
-				<input type='date' ref={dateRef} onChange={onChange} value={values.date} name='date' id="date" className={cn(styles['input'], {
-					[styles['invalid']]: !isValid.date
-				})} />
+				<Input type='date' ref={dateRef} isValid={isValid.date} onChange={onChange} value={values.date} name='date' id="date" />
 			</div>
 			<div className={styles['form-row']}>
 				<label htmlFor="tag" className={styles['form-label']}>
 					<img src='/folder.svg' alt='Иконка папки'/>
 					<span>Метки</span>
 				</label>
-				<input type='text' onChange={onChange} value={values.tag } id="tag" name='tag' className={styles['input']} />
+				<Input type='text' onChange={onChange} value={values.tag } id="tag" name='tag'/>
 			</div>
 			
 			<textarea ref={postRef} name="post" id="" onChange={onChange} value={values.post} cols="30" rows="10" className={cn(styles['input'], {
